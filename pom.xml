@@ -2,11 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!--这是Spring Boot的父级依赖，这样当前的项目就是Spring Boot项目了。
+     它用来提供相关的Maven默认依赖。使用它之后，常用的包依赖可以省去version标签。
+     使用 Spring Boot 提供的默认配置-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> <!-- 指定查找父级POM的路径 -->
     </parent>
     <groupId>live.anli</groupId>
     <artifactId>springboot-learning</artifactId>
@@ -18,9 +21,24 @@
     </properties>
     <dependencies>
         <dependency>
+            <!--使用 Spring Boot 提供的 Starter 模块-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>3.2.0</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--导入配置文件处理器，配置文件进行绑定就会有提示-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -31,9 +49,13 @@
 
     <build>
         <plugins>
+            <!-- 这个插件，可以将应用打包成一个可执行的jar包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>live.anli.SpringbootLearningApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
